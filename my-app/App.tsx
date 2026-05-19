@@ -8,10 +8,14 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
+  useColorScheme,
 } from 'react-native';
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState<'login' | 'home'>('login');
+  const colorScheme = useColorScheme();
+  const isDarkMode = colorScheme === 'dark';
+  const styles = createStyles(isDarkMode);
 
   const LoginScreen = () => (
     <View style={styles.loginContainer}>
@@ -104,179 +108,199 @@ export default function App() {
   return (
     <View style={{ flex: 1 }}>
       {currentScreen === 'login' ? <LoginScreen /> : <HomeScreen />}
-      <StatusBar style="auto" />
+      <StatusBar style={isDarkMode ? 'light' : 'dark'} />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  loginContainer: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  loginCard: {
-    width: '100%',
-    maxWidth: 400,
-    padding: 40,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#dadce0',
-    alignItems: 'center',
-  },
-  logoContainer: {
-    flexDirection: 'row',
-    marginBottom: 10,
-  },
-  logoLetter: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  title: {
-    fontSize: 24,
-    color: '#202124',
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#202124',
-    marginBottom: 40,
-  },
-  input: {
-    width: '100%',
-    height: 55,
-    borderWidth: 1,
-    borderColor: '#dadce0',
-    borderRadius: 4,
-    paddingHorizontal: 15,
-    fontSize: 16,
-    marginBottom: 8,
-  },
-  linkText: {
-    color: '#1a73e8',
-    fontWeight: '600',
-    fontSize: 14,
-    alignSelf: 'flex-start',
-  },
-  loginFooter: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%',
-    marginTop: 40,
-  },
-  primaryButton: {
-    backgroundColor: '#1a73e8',
-    paddingVertical: 10,
-    paddingHorizontal: 24,
-    borderRadius: 4,
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: '600',
-    fontSize: 14,
-  },
-  homeContainer: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  header: {
-    height: 60,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
-    marginTop: 40,
-  },
-  headerLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  menuIcon: {
-    fontSize: 20,
-    color: '#5f6368',
-    marginRight: 15,
-  },
-  headerTitle: {
-    fontSize: 20,
-    color: '#5f6368',
-  },
-  profileCircle: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: '#7b1fa2',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  profileLetter: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-  content: {
-    padding: 20,
-  },
-  searchBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#f1f3f4',
-    borderRadius: 8,
-    paddingHorizontal: 15,
-    marginBottom: 30,
-  },
-  searchIcon: {
-    fontSize: 16,
-    color: '#5f6368',
-  },
-  searchInput: {
-    flex: 1,
-    padding: 12,
-    fontSize: 16,
-  },
-  sectionTitle: {
-    fontSize: 22,
-    color: '#202124',
-    fontWeight: '400',
-  },
-  sectionSubtitle: {
-    fontSize: 14,
-    color: '#5f6368',
-    marginBottom: 20,
-  },
-  grid: {
-    gap: 15,
-  },
-  card: {
-    padding: 20,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#dadce0',
-  },
-  cardTitle: {
-    fontSize: 18,
-    fontWeight: '500',
-    marginBottom: 5,
-  },
-  cardDesc: {
-    fontSize: 14,
-    color: '#5f6368',
-    lineHeight: 20,
-  },
-  chip: {
-    backgroundColor: '#e8f0fe',
-    paddingHorizontal: 12,
-    paddingVertical: 4,
-    borderRadius: 16,
-    alignSelf: 'flex-start',
-    marginTop: 10,
-  },
-  chipText: {
-    color: '#1967d2',
-    fontSize: 12,
-    fontWeight: '600',
-  },
-});
+const createStyles = (isDarkMode: boolean) => {
+  const backgroundColor = isDarkMode ? '#121212' : '#fff';
+  const cardBackground = isDarkMode ? '#1e1e1e' : '#fff';
+  const borderColor = isDarkMode ? '#303030' : '#dadce0';
+  const textPrimary = isDarkMode ? '#f5f5f5' : '#202124';
+  const textSecondary = isDarkMode ? '#b0b0b0' : '#5f6368';
+  const inputBackground = isDarkMode ? '#232323' : '#fff';
+  const searchBackground = isDarkMode ? '#232323' : '#f1f3f4';
+  const chipBackground = isDarkMode ? '#2a2a2a' : '#e8f0fe';
+  const chipText = isDarkMode ? '#8ab4f8' : '#1967d2';
+
+  return StyleSheet.create({
+    loginContainer: {
+      flex: 1,
+      backgroundColor,
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 20,
+    },
+    loginCard: {
+      width: '100%',
+      maxWidth: 400,
+      padding: 40,
+      borderRadius: 8,
+      borderWidth: 1,
+      borderColor,
+      backgroundColor: cardBackground,
+      alignItems: 'center',
+    },
+    logoContainer: {
+      flexDirection: 'row',
+      marginBottom: 10,
+    },
+    logoLetter: {
+      fontSize: 24,
+      fontWeight: '600',
+    },
+    title: {
+      fontSize: 24,
+      color: textPrimary,
+      marginBottom: 8,
+    },
+    subtitle: {
+      fontSize: 16,
+      color: textSecondary,
+      marginBottom: 40,
+    },
+    input: {
+      width: '100%',
+      height: 55,
+      borderWidth: 1,
+      borderColor,
+      backgroundColor: inputBackground,
+      borderRadius: 4,
+      paddingHorizontal: 15,
+      fontSize: 16,
+      marginBottom: 8,
+      color: textPrimary,
+    },
+    linkText: {
+      color: '#8ab4f8',
+      fontWeight: '600',
+      fontSize: 14,
+      alignSelf: 'flex-start',
+    },
+    loginFooter: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      width: '100%',
+      marginTop: 40,
+    },
+    primaryButton: {
+      backgroundColor: '#1a73e8',
+      paddingVertical: 10,
+      paddingHorizontal: 24,
+      borderRadius: 4,
+    },
+    buttonText: {
+      color: '#fff',
+      fontWeight: '600',
+      fontSize: 14,
+    },
+    homeContainer: {
+      flex: 1,
+      backgroundColor,
+    },
+    header: {
+      height: 60,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingHorizontal: 16,
+      borderBottomWidth: 1,
+      borderBottomColor: borderColor,
+      marginTop: 40,
+      backgroundColor,
+    },
+    headerLeft: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    menuIcon: {
+      fontSize: 20,
+      color: textSecondary,
+      marginRight: 15,
+    },
+    headerTitle: {
+      fontSize: 20,
+      color: textSecondary,
+    },
+    profileCircle: {
+      width: 32,
+      height: 32,
+      borderRadius: 16,
+      backgroundColor: '#7b1fa2',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    profileLetter: {
+      color: '#fff',
+      fontWeight: 'bold',
+    },
+    content: {
+      padding: 20,
+      backgroundColor,
+    },
+    searchBar: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: searchBackground,
+      borderRadius: 8,
+      paddingHorizontal: 15,
+      marginBottom: 30,
+    },
+    searchIcon: {
+      fontSize: 16,
+      color: textSecondary,
+    },
+    searchInput: {
+      flex: 1,
+      padding: 12,
+      fontSize: 16,
+      color: textPrimary,
+    },
+    sectionTitle: {
+      fontSize: 22,
+      color: textPrimary,
+      fontWeight: '400',
+    },
+    sectionSubtitle: {
+      fontSize: 14,
+      color: textSecondary,
+      marginBottom: 20,
+    },
+    grid: {
+      gap: 15,
+    },
+    card: {
+      padding: 20,
+      borderRadius: 8,
+      borderWidth: 1,
+      borderColor,
+      backgroundColor: cardBackground,
+    },
+    cardTitle: {
+      fontSize: 18,
+      fontWeight: '500',
+      marginBottom: 5,
+      color: textPrimary,
+    },
+    cardDesc: {
+      fontSize: 14,
+      color: textSecondary,
+      lineHeight: 20,
+    },
+    chip: {
+      backgroundColor: chipBackground,
+      paddingHorizontal: 12,
+      paddingVertical: 4,
+      borderRadius: 16,
+      alignSelf: 'flex-start',
+      marginTop: 10,
+    },
+    chipText: {
+      color: chipText,
+      fontSize: 12,
+      fontWeight: '600',
+    },
+  });
+};
